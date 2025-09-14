@@ -34,3 +34,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+# Yojifreya - Visualize Hash Table Probing
+
+## คำอธิบายโปรเจกต์
+Yojifreya เป็นเว็บแอปพลิเคชันที่สาธิตแนวคิด **Linear Probing** และ **Quadratic Probing** ใน Hash Table โดยมีอินเทอร์เฟซที่โต้ตอบได้ ทำให้ผู้ใช้สามารถเข้าใจการทำงานของเทคนิคการแก้ปัญหา Collision ใน Hash Table ได้ง่าย
+
+เว็บนี้สร้างด้วย **Next.js**, **React**, **fullPage.js (GPLv3)** และ **Framer Motion**
+
+## การติดตั้งและรันโปรเจกต์
+
+1. **Clone โปรเจกต์**
+```bash
+git clone https://github.com/USERNAME/Yojifreya.git
+cd Yojifreya
