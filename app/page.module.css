@@ -28,7 +28,29 @@
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  .page1 {
+    --gray-rgb: 255, 255, 255;
+    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
+    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #1a1a1a;
+  }
+}
+
 .main {
+  width: 100%;
+  max-width: 1920px;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  justify-content: space-between; /* Text ซ้าย รูปขวา */
+  align-items: center;
+  padding: clamp(1rem, 2vw, 3rem);
+  box-sizing: border-box;
+}
+
+.main1 {
   width: 100%;
   max-width: 1920px;
   aspect-ratio: 16 / 9;
@@ -48,6 +70,26 @@
   margin: 0;
 }
 
+.title2 {
+  font-size: clamp(32px, 6vw, 400px); /* เพิ่ม max เป็น 400px และ scale เร็วขึ้น */
+  font-weight: 500;
+  color: #436fff;
+  line-height: 1;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  transition: all 0.5s ease;
+}
+
+.title3 {
+  font-size: clamp(32px, 6vw, 400px); /* เพิ่ม max เป็น 400px และ scale เร็วขึ้น */
+  font-weight: 500;
+  color: #436fff;
+  line-height: 1;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  transition: all 0.5s ease;
+}
+
 .subtitle {
   font-size: 3rem;
   font-weight: 400;
@@ -55,6 +97,25 @@
   line-height: 1.5;
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   margin: 0;
+}
+
+.subtitle2 {
+  font-size: clamp(16px, 2.5vw, 30px);
+  font-weight: 400;
+  color: #797676; /* สีเทาอ่อน */
+  line-height: 1.5;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  transition: all 0.5s ease;
+}
+.subtitle3 {
+  font-size: clamp(16px, 2.5vw, 30px);
+  font-weight: 400;
+  color: #797676; /* สีเทาอ่อน */
+  line-height: 1.5;
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  transition: all 0.5s ease;
 }
 
 .colorY {
@@ -82,6 +143,14 @@
   margin-top: clamp(1rem, 2vw, 3rem);
   
 }
+.img1 {
+  display: flex;
+  justify-content: flex-start; /* เปลี่ยนเป็น center / end ได้ตามใจ */
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2.5rem);
+  margin-top: clamp(1rem, 2vw, 3rem);
+  
+}
 
 
 
@@ -100,6 +169,37 @@
   left: 35%; 
   transform: translate(-50%, -50%); 
   z-index: 100; 
+   transition: all 0.5s ease;
+}
+
+.textContainer2 {
+  position: fixed;
+  top: 115%;           /* อยู่กลางแนวตั้ง */
+  left: 50%;          /* อยู่กลางแนวนอน */
+  transform: translate(-50%, -50%);
+  z-index: 100;
+
+  text-align: center; /* ทำให้ h1/p อยู่กลาง */
+  width: 80%;         /* responsive ตาม viewport */
+  max-width: 700px;   /* ขนาดสูงสุด */
+  padding: 10px;
+
+   transition: all 0.5s ease;
+}
+
+.textContainer3 {
+  position: absolute;         /* หรือ fixed ถ้าอยากให้เลื่อนตามจอ */
+  top: 4vh;                  /* ห่างจากบนจอ 10% */
+  left: 50%;                  /* ขยับไปกึ่งกลาง */
+  transform: translateX(-50%);/* ดึงกลับมากึ่งกลางเป๊ะ */
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  width: auto;                /* ให้ขนาดตามเนื้อหา */
+  max-width: 90%;             /* กันล้น */
 }
 
 .php1 {
@@ -113,18 +213,413 @@
   height: auto;  
 }
 
-
-
-.fullpageContainer {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+.php2 {
+  position: absolute;      
+  bottom: 0px;            
+  left: 100%;             
+  transform: translateX(-38%);
+  z-index: 50;
+  opacity: 0.5;
+  width: 300px;             
+  height: auto;  
+}
+.php5 {
+  position: absolute;      
+  bottom: 0px;            
+  left: 100%;             
+  transform: translateX(-40%);
+  z-index: 50;
+  opacity: 0.5;
+  width: 300px;             
+  height: auto;  
+}
+.php6 {
+  position: absolute;      
+  bottom: 0px;            
+  left: 100%;             
+  transform: translateX(44%);
+  z-index: 50;
+  opacity: 0.5;
+  width: 300px;             
+  height: auto;  
 }
 
-.section {
-  height: 100vh;
-  scroll-snap-align: start;
+
+
+.scrollBox {
+  position: fixed;
+  top: 160%;           
+  left: 50%;          
+  transform: translate(-50%, -50%); 
+
+  width: 80%;         
+  max-width: 1000px;  
+  max-height: 55vh;   
+
+  overflow: hidden;
+  padding: 25px 40px 25px 25px; /* เพิ่ม padding ขวาให้ scrollbar ไม่ชน content */
+
+  background: rgba(10, 10, 30, 0.85); 
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+
+  color: #f5f5ff;    
+  font-size: 17px;
+  line-height: 1.6;
+  font-family: "Times New Roman", serif;
+
+  z-index: 999;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: grab;
+
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+
+  /* Firefox scrollbar gutter */
+  scrollbar-gutter: stable;
+  transition: all 0.5s ease;
+}
+
+.scrollBox:hover {
+  overflow-y: auto;
+  transform: translate(-50%, -50%) scale(1.02);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+}
+
+
+/* ===== Title ===== */
+.scrollBoxTitle {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 32px;
+  color: #fff;
+  text-shadow: 0 0 10px #ffffff, 0 0 40px #ffffff;
+  letter-spacing: 2px;
+  z-index: 1000;
+  text-align: center;
+}
+
+
+.simulatorBox {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+
+
+.empty {
+  background: #fff;
+}
+
+.filled {
+  background: #4cafef;
+  color: #fff;
+}
+
+.deleted {
+  background: #ff9800;
+  color: #000;
+}
+
+.path {
+  outline: 3px solid red;
+}
+
+
+
+
+
+.simulatorBox {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
+
+.empty {
+  background: #fff;
+}
+
+.filled {
+  background: #4cafef;
+  color: #fff;
+}
+
+.deleted {
+  background: #ff9800;
+  color: #000;
+}
+
+.path {
+  outline: 3px solid red;
+}
+
+
+
+
+.simulatorBox {
+  text-align: center;
+  margin: 16px 0;
+  z-index: 10;
+  position: relative;
+}
+
+.simulatorBox input,
+.simulatorBox button,
+.simulatorBox select {
+  pointer-events: auto;
+}
+
+
+
+
+
+.empty {
+  background: #fff;
+  color: #111;
+}
+
+.filled {
+  background: #0b71ff;
+  color: white;
+}
+
+.deleted {
+  background: #ffb74d;
+  color: #000;
+}
+
+.path {
+  outline: 3px solid rgba(255, 0, 0, 0.6);
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.15);
+}
+
+.input {
+  padding: 6px 8px;
+  margin: 4px;
+  width: 160px;
+}
+
+.button {
+  padding: 6px 10px;
+  margin: 4px;
+  cursor: pointer;
+}
+
+.select {
+  padding: 6px 8px;
+  margin: 4px;
+}
+
+
+.arrow {
+  position: absolute;
+  font-size: 16px;
+  color: red;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+
+
+
+
+
+.frame,
+.frame3,
+.frame4 {
+  background: #060c2cdd;
+  border-radius: 16px;
+  padding: clamp(12px, 2vw, 20px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+  width: 100%;       /* ยืดเต็มพื้นที่ parent */
+  height: auto;
+  display: flex;
+  flex-direction: column;
+
+  
+}
+
+.frame2 {
+  background: #060c2cdd;
+  border-radius: 16px;
+  padding: clamp(12px, 2vw, 20px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  
+  
+  min-height: 300px; /* น้อยสุด */
+  width: 100%;
+  max-width: 100%;
+  padding: clamp(12px, 2vw, 20px);
+  box-sizing: border-box;
+  overflow: hidden; /* scroll เฉพาะ content เกิน */
+}
+
+/* Input Controls */
+.frame {
+  max-width: 100%;   /* ไม่ล็อค 600px แล้ว */
+}
+
+/* Hash Table */
+.frame2 {
+  flex: 1;
+  min-height: 400px;
+}
+
+/* Messages & Formula */
+.frame3,
+.frame4 {
+  min-height: 100px;
+}
+
+
+.gridTable {
+  display: grid;
+  gap: 6px;
+  justify-content: center;
+  align-content: start;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(30px,6vw,50px), max-content));
+  margin: 0 auto;
+}
+
+.frameTitle,
+.frameTitle2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #ffffff;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
+}
+
+.simulatorBox {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* left panel 1fr, right panel 2fr */
+  gap: clamp(20px, 3vw, 50px);
+  width: 90%;
+  max-width: 1620px;
+  padding: clamp(10px, 2vw, 20px);
+  box-sizing: border-box;
+  
+  position: absolute;   /* หรือ fixed */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -35%);
+}
+
+/* Left Panel */
+.leftPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Right Panel */
+.rightPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .simulatorBox {
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(8px, 2vw, 20px);
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  .simulatorBox {
+    grid-template-columns: 1fr;  /* ซ้อนแนวตั้ง */
+    gap: clamp(6px, 2vw, 15px);
+  }
+}
+
+
+.frame:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+}
+
+.frameTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #ffffff;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 6px;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  margin-bottom: 10px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input:focus,
+.select:focus {
+  border-color: #2e8feb;
+  box-shadow: 0 0 0 3px rgba(125, 95, 255, 0.25);
+  outline: none;
+}
+
+.button {
+  background: linear-gradient(135deg, #2e8feb, #2f27c0);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  margin: 4px;
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #6c63ff, #5a54e6);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+.button:active {
+  transform: scale(0.96);
+}
+
+
+.select {
+  color:rgb(255, 255, 255);
+  opacity: 1;
+  background-color: #060c2cdd;
+
+}
+
+
+.select option {
+  background-color: #060c2cdd;
+  color: #ffffff;
+
+}
+
+
+.cell {
+  width: clamp(30px, 6vw, 50px);
+  height: clamp(30px, 6vw, 50px);
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: 600;
+  border: 1px solid #222;
+  box-sizing: border-box;
+  position: relative; /* ถ้าใช้ arrow หรือ index ข้างใน */
 }
+
