@@ -152,16 +152,11 @@
   
 }
 
-
-
-
-
 @media (prefers-color-scheme: dark) {
   .logo {
     filter: invert();
   }
 }
-
 
 .textContainer {
   position: fixed;
@@ -174,32 +169,32 @@
 
 .textContainer2 {
   position: fixed;
-  top: 115%;           /* อยู่กลางแนวตั้ง */
-  left: 50%;          /* อยู่กลางแนวนอน */
+  top: 115%;           
+  left: 50%;          
   transform: translate(-50%, -50%);
   z-index: 100;
 
-  text-align: center; /* ทำให้ h1/p อยู่กลาง */
-  width: 80%;         /* responsive ตาม viewport */
-  max-width: 700px;   /* ขนาดสูงสุด */
+  text-align: center; 
+  width: 80%;         
+  max-width: 700px;   
   padding: 10px;
 
    transition: all 0.5s ease;
 }
 
 .textContainer3 {
-  position: absolute;         /* หรือ fixed ถ้าอยากให้เลื่อนตามจอ */
-  top: 4vh;                  /* ห่างจากบนจอ 10% */
-  left: 50%;                  /* ขยับไปกึ่งกลาง */
-  transform: translateX(-50%);/* ดึงกลับมากึ่งกลางเป๊ะ */
+  position: absolute;         
+  top: 4vh;                 
+  left: 50%;                  
+  transform: translateX(-50%);
   
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 
-  width: auto;                /* ให้ขนาดตามเนื้อหา */
-  max-width: 90%;             /* กันล้น */
+  width: auto;                
+  max-width: 90%;             
 }
 
 .php1 {
@@ -244,8 +239,6 @@
   height: auto;  
 }
 
-
-
 .scrollBox {
   position: fixed;
   top: 160%;           
@@ -257,7 +250,7 @@
   max-height: 55vh;   
 
   overflow: hidden;
-  padding: 25px 40px 25px 25px; /* เพิ่ม padding ขวาให้ scrollbar ไม่ชน content */
+  padding: 25px 40px 25px 25px; 
 
   background: rgba(10, 10, 30, 0.85); 
   border-radius: 20px;
@@ -286,7 +279,6 @@
   box-shadow: 0 12px 40px rgba(0,0,0,0.7);
 }
 
-
 /* ===== Title ===== */
 .scrollBoxTitle {
   position: fixed;
@@ -301,14 +293,10 @@
   text-align: center;
 }
 
-
 .simulatorBox {
   text-align: center;
   margin-top: 20px;
 }
-
-
-
 
 .empty {
   background: #fff;
@@ -328,16 +316,10 @@
   outline: 3px solid red;
 }
 
-
-
-
-
 .simulatorBox {
   text-align: center;
   margin-top: 20px;
 }
-
-
 
 .empty {
   background: #fff;
@@ -356,9 +338,6 @@
 .path {
   outline: 3px solid red;
 }
-
-
-
 
 .simulatorBox {
   text-align: center;
@@ -372,10 +351,6 @@
 .simulatorBox select {
   pointer-events: auto;
 }
-
-
-
-
 
 .empty {
   background: #fff;
@@ -414,7 +389,6 @@
   margin: 4px;
 }
 
-
 .arrow {
   position: absolute;
   font-size: 16px;
@@ -422,11 +396,6 @@
   font-weight: bold;
   margin-top: 2px;
 }
-
-
-
-
-
 
 .frame,
 .frame3,
@@ -436,12 +405,10 @@
   padding: clamp(12px, 2vw, 20px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 
-  width: 100%;       /* ยืดเต็มพื้นที่ parent */
+  width: 100%;       
   height: auto;
   display: flex;
   flex-direction: column;
-
-  
 }
 
 .frame2 {
@@ -451,17 +418,17 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   
   
-  min-height: 300px; /* น้อยสุด */
+  min-height: 300px; 
   width: 100%;
   max-width: 100%;
   padding: clamp(12px, 2vw, 20px);
   box-sizing: border-box;
-  overflow: hidden; /* scroll เฉพาะ content เกิน */
+  overflow: hidden; 
 }
 
 /* Input Controls */
 .frame {
-  max-width: 100%;   /* ไม่ล็อค 600px แล้ว */
+  max-width: 100%;   
 }
 
 /* Hash Table */
@@ -498,14 +465,14 @@
 
 .simulatorBox {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* left panel 1fr, right panel 2fr */
+  grid-template-columns: 1fr 2fr;
   gap: clamp(20px, 3vw, 50px);
   width: 90%;
   max-width: 1620px;
   padding: clamp(10px, 2vw, 20px);
   box-sizing: border-box;
   
-  position: absolute;   /* หรือ fixed */
+  position: absolute;   
   top: 50%;
   left: 50%;
   transform: translate(-50%, -35%);
@@ -535,7 +502,7 @@
 /* Mobile layout */
 @media (max-width: 768px) {
   .simulatorBox {
-    grid-template-columns: 1fr;  /* ซ้อนแนวตั้ง */
+    grid-template-columns: 1fr;  
     gap: clamp(6px, 2vw, 15px);
   }
 }
@@ -620,6 +587,6 @@
   font-weight: 600;
   border: 1px solid #222;
   box-sizing: border-box;
-  position: relative; /* ถ้าใช้ arrow หรือ index ข้างใน */
+  position: relative; 
 }
 

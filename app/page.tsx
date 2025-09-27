@@ -10,20 +10,14 @@ type Mode = "linear" | "quadratic" | null;
 export default function Home() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = useState(false);
-
   const [isTableInitialized, setIsTableInitialized] = useState(false);
-
   const [tableSize, setTableSize] = useState<number | null>(null);
   const [hashTable, setHashTable] = useState<(number | "D" | null)[]>([]);
   const [mode, setMode] = useState<Mode>(null);
   const [inputVal, setInputVal] = useState<string>("");
   const [path, setPath] = useState<number[]>([]);
-
   const [message, setMessage] = useState<string | null>(null);
-
   const messageTimeout = useRef<NodeJS.Timeout | null>(null);
-
-
   const options = [
   { value: 'linear', label: 'Linear Probing' },
   { value: 'quadratic', label: 'Quadratic Probing' },
@@ -34,21 +28,16 @@ export default function Home() {
     if(messageTimeout.current){
       clearTimeout(messageTimeout.current);
     }
-
     messageTimeout.current = setTimeout(() => {
       setMessage(null);
       messageTimeout.current = null;
     }, 4000);
   };
   
-  
-
-  // init table เมื่อเปลี่ยนขนาด
   useEffect(() => {
-  if (!mode) return; // ถ้าเป็น null ไม่ทำอะไร
+  if (!mode) return; 
   if (!tableSize || tableSize <= 0) return;
 
-  // รีเซ็ต hash table
   setHashTable(Array(tableSize).fill(null));
   setPath([]);
   addMessage(`Mode changed to ${mode}. Hash table reset.`);
@@ -65,7 +54,6 @@ export default function Home() {
   };
 
   const resetTable = () => {
-   
     setHashTable([]);
     setPath([]);
     setTableSize(null);
@@ -77,7 +65,7 @@ export default function Home() {
 
   const hashFunction = (key: number) => {
     const m = tableSize as number;
-    return ((key % m) + m) % m; // รองรับค่าลบ
+    return ((key % m) + m) % m;
   };
 
   const ensureReady = () => {
@@ -102,12 +90,10 @@ export default function Home() {
       addMessage("Please enter a valid number");
       return;
     }
-
     const m = tableSize as number;
     const start = hashFunction(key);
     let i = 0;
     const newPath: number[] = [];
-
     while (i < m) {
       const probe = mode === "linear" ? (start + i) % m : (start + i * i) % m;
       newPath.push(probe);
@@ -135,12 +121,10 @@ export default function Home() {
       addMessage("Please enter a valid number");
       return;
     }
-
     const m = tableSize as number;
     const start = hashFunction(key);
     let i = 0;
     const newPath: number[] = [];
-
     while (i < m) {
       const probe = mode === "linear" ? (start + i) % m : (start + i * i) % m;
       newPath.push(probe);
@@ -171,7 +155,6 @@ export default function Home() {
       addMessage("Please enter a valid number");
       return;
     }
-
     const m = tableSize as number;
     const start = hashFunction(key);
     let i = 0;
@@ -180,7 +163,6 @@ export default function Home() {
     while (i < m) {
       const probe = mode === "linear" ? (start + i) % m : (start + i * i) % m;
       newPath.push(probe);
-
       if (hashTable[probe] === key) {
         const newTable = [...hashTable];
         newTable[probe] = "D";
@@ -199,7 +181,6 @@ export default function Home() {
     addMessage(`Key ${key} not found, cannot delete`);
   };
 
-  // scrollBox handler
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -215,11 +196,6 @@ export default function Home() {
     return () => el.removeEventListener("wheel", handleWheel);
   }, [hovering]);
 
-  
-
-
-
-
   return (
     <ReactFullpage
       credits={{ enabled: false }}
@@ -231,7 +207,6 @@ export default function Home() {
     
       render={() => (
         <ReactFullpage.Wrapper>
-          {/* Section 1 */}
           <div className="section">
             <div className={styles.page}>
               <main className={styles.main}>
@@ -261,7 +236,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Section 2 */}
           <div className="section">
             <div className={styles.page}>
               <main className={styles.main}>
@@ -275,9 +249,6 @@ export default function Home() {
                   />
                   
                 </div>
-       
-                
-
                 <div className={styles.textContainer2}>
                   <h1 className={styles.title2}>
                     <span className={styles.colorY}>Y</span>
@@ -288,7 +259,6 @@ export default function Home() {
                   <p className={styles.subtitle2}>
                     LINEAR PROBING    QUADRATIC PROBING</p>
                 </div>
-                {/* ScrollBox */}
                 <div
                   className={styles.scrollBox}
                   ref={scrollRef}
@@ -328,18 +298,14 @@ export default function Home() {
                   <p>- ลดปัญหา Primary Clustering: ช่วยกระจายข้อมูลที่ชนกันให้ไม่ไปกองรวมกันเป็นกลุ่มใหญ่ๆ </p>
                   <p style={{ fontSize: "22px", lineHeight: "2",textDecoration: "underline",textDecorationThickness: "1px" }}>ข้อเสีย</p>
                   <p>- เกิด Secondary Clustering: แม้ว่าจะแก้ Primary Clustering ได้ แต่ถ้าข้อมูลหลายตัวมีค่าแฮชเริ่มต้นเหมือนกัน ก็จะเดินไปในเส้นทางเดียวกัน ทำให้เกิดกลุ่มข้อมูลแบบใหม่ได้ (แต่ปัญหาน้อยกว่าแบบแรก) </p>
-              
                 </div>
               </main>
             </div>
           </div>
 
-          {/* Section 3 */}
           <div className="section">
             <div className={styles.page}>
               <main className={styles.main}>
-                
-                {/* Title */}
                 <div className={styles.textContainer3}>
                   <h1 className={styles.title3}>
                     <span className={styles.colorY}>Hashing&nbsp;</span>
@@ -352,8 +318,6 @@ export default function Home() {
                 </div>
 
                 <div className={styles.simulatorBox}>
-                  
-                  {/* 🔹 Input Section */}
                   <div className={styles.leftPanel}>
                     <section className={styles.frame}>
                       <h2 className={styles.frameTitle}>⚙️ Input Controls</h2>
@@ -418,25 +382,25 @@ export default function Home() {
                               backgroundColor: state.isFocused ? '#1a1f4a' : '#060c2c',
                               color: 'white',
                               padding: 10,
-                              fontSize: '16px',           // ✅ ขนาดตัวอักษรในตัวเลือก
-                              textAlign: 'left',          // ✅ ตำแหน่ง
+                              fontSize: '16px',           
+                              textAlign: 'left',          
                             }),
                             singleValue: (base) => ({
                               ...base,
                               color: 'white',
-                              fontSize: '18px',           // ✅ ขนาดตัวอักษรของ value
+                              fontSize: '18px',           
                               textAlign: 'left',
                               
                             }),
                             placeholder: (base) => ({
                               ...base,
-                              color: '#c0c0c0ff',              // ✅ สี placeholder
+                              color: '#c0c0c0ff',             
                               fontSize: '16px',
                               paddingRight: '300px'
                             }),
                             container: (base) => ({
                               ...base,
-                              alignSelf: 'flex-start',    // ✅ ตำแหน่งโดยรวม
+                              alignSelf: 'flex-start',    
                               width: '470px',
                               marginLeft:'5px',
                               marginBottom: '10px',
