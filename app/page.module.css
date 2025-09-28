@@ -14,7 +14,16 @@
   justify-content: flex-start; /* ถ้าอยากให้อยู่ซ้าย */
   align-items: flex-start;     /* ถ้าอยากให้อยู่บน */
   overflow: hidden;      /* กัน scroll */
-  font-family: Nomark;
+  font-family: MyFont;
+}
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('/font/Nomark.otf') format('otf2'), /* ใช้ไฟล์ฟอนต์จริง */
+       url('/font/Nomark.otf') format('woff');   /* สำรอง */
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* ให้เบราว์เซอร์ใช้ fallback ชั่วคราวก่อนโหลดฟอนต์ */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -649,3 +658,7 @@
 
 
 
+@font-face {
+  font-family: 'MyFont';
+  src: url(data:font/woff2;base64,AAEAAAALAIAAA...) format('woff2');
+}

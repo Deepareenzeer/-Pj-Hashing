@@ -4,6 +4,8 @@ import ReactFullpage from "@fullpage/react-fullpage";
 import Image from "next/image";
 import styles from "./page.module.css";
 import Select from 'react-select';
+import localFont from "next/font/local";
+import "./globals.css";
 
 type Mode = "linear" | "quadratic" | null;
 
@@ -35,6 +37,7 @@ export default function Home() {
       messageTimeout.current = null;
     }, 4000);
   };
+  
   
   useEffect(() => {
   if (!mode) return; 
