@@ -443,16 +443,38 @@
   
 }
 
-.frame3,
-.frame4 {
+.frame3 {
   background: #060c2cdd;
   border-radius: clamp(4px, 0.5vw, 8px);
-  padding: clamp(0.3rem, 0.8vw, 1rem);
+  padding: 0.5rem;
+
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   
   flex: 0 0 auto;
-  min-height: clamp(3rem, 8vh, 6rem);
-  max-height: 105px;
+  min-height: clamp(3rem, 8vh, 9rem);
+  max-height: 15px;
+
+  
+  
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
+  
+}
+
+.frame4 {
+  background: #060c2cdd;
+  border-radius: clamp(4px, 0.5vw, 8px);
+  padding: 0.5rem;
+  padding-bottom: 7rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  
+  flex: 0 0 auto;
+  min-height: clamp(3rem, 8vh, 9rem);
+  max-height: 15px;
+
+  
   
   display: flex;
   flex-direction: column;
@@ -513,7 +535,7 @@
   width: clamp(320px, 100vw, 1450px);
   height: clamp(400px, 80vh, 800px);
   max-width: 500vw;
-  max-height: 80vh;
+  max-height: 90vh;
   
   padding: clamp(0.2rem, 1vw, 1.5rem);
   box-sizing: border-box;
