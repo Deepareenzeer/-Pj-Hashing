@@ -325,18 +325,18 @@ export default function Home() {
                         <input
                           className={styles.input}
                           type="number"
-                          placeholder="Table Size ( Max 126 )"
+                          placeholder="Table Size ( Max 128 )"
                           value={tableSize ?? ""}
                           disabled={isTableInitialized}
-                          max={126}
+                          max={128}
                           onChange={(e) => {
                             const valStr = e.target.value.slice(0, 3);
                             const val = parseInt(valStr, 10);
                             if (isNaN(val)) {
                               setTableSize(null);
                              
-                            } else if (val > 126) {
-                              setTableSize(126);
+                            } else if (val > 128) {
+                              setTableSize(128);
                               
                             } else{
                               setTableSize(val);
@@ -524,7 +524,7 @@ export default function Home() {
                           style={{
                             display: "grid",
                             gridAutoFlow: "column",
-                            gridTemplateRows: `repeat(9, 50px)`,
+                            gridTemplateRows: `repeat(8, 50px)`,
                             gap: "6px",
                             maxWidth: "100%",   // 🔹 fix width ไม่ให้ยืดเกินหน้าจอ
                             overflowX: "auto",  // 🔹 scroll แนวนอนถ้า table ใหญ่
