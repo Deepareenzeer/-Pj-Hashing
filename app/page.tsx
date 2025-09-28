@@ -69,8 +69,8 @@ export default function Home() {
       return;
     }
 
-    if (size > 112) {
-      addMessage("Table size cannot exceed 112");
+    if (size > 126) {
+      addMessage("Table size cannot exceed 126");
       return;
     }
 
@@ -355,7 +355,7 @@ export default function Home() {
                         <input
                           className={styles.input}
                           type="text"
-                          placeholder="Table Size ( Max 112 )"
+                          placeholder="Table Size ( Max 126 )"
                           value={tableSizeInput}
                           disabled={isTableInitialized}
                           max={112}
@@ -430,12 +430,12 @@ export default function Home() {
                               ...base,
                               color: '#c0c0c0ff',             
                               fontSize: 'clamp(14px, 1vw, 16px)',
-                              paddingRight: '70%',
+                              paddingRight: '78%',
                             }),
                             container: (base) => ({
                                 ...base,
                                 width: '100%',      // ใช้เต็ม parent
-                                maxWidth: '419px',  // จำกัดสูงสุด
+                                maxWidth: '533px',  // จำกัดสูงสุด
                                 marginLeft:'4px',
                                 marginBottom: '10px',
                                 marginTop: '10px',
@@ -558,7 +558,7 @@ export default function Home() {
                           style={{
                             display: "grid",
                             gridAutoFlow: "column",
-                            gridTemplateRows: `repeat(8, 50px)`,
+                            gridTemplateRows: `repeat(9, 50px)`,
                             gap: "6px",
                             maxWidth: "100%",   // 🔹 fix width ไม่ให้ยืดเกินหน้าจอ
                             overflowX: "auto",  // 🔹 scroll แนวนอนถ้า table ใหญ่
