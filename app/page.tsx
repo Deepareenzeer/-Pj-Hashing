@@ -325,7 +325,7 @@ export default function Home() {
                         <input
                           className={styles.input}
                           type="number"
-                          placeholder="Table Size ( Max 126 )"
+                          placeholder="Table Size ( Max 12 )"
                           value={tableSize ?? ""}
                           disabled={isTableInitialized}
                           max={126}
@@ -527,10 +527,9 @@ export default function Home() {
                             gridAutoFlow: "column",
                             gridTemplateRows: `repeat(9, 50px)`,
                             gap: "6px",
-                            marginTop: "10px",
-                            marginLeft: "10px",
-                            marginRight: "auto",
-                            minWidth: "fit-content",   // 🔹 ทำให้ grid กว้างเต็มกรอบเสมอ
+                            maxWidth: "100%",   // 🔹 fix width ไม่ให้ยืดเกินหน้าจอ
+                            overflowX: "auto",  // 🔹 scroll แนวนอนถ้า table ใหญ่
+                            padding: "5px",
                           }}
                         >
                           {hashTable.map((cell, i) => {
