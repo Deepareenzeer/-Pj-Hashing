@@ -325,17 +325,18 @@ export default function Home() {
                         <input
                           className={styles.input}
                           type="number"
-                          placeholder="Table Size ( Max 176 )"
+                          placeholder="Table Size ( Max 126 )"
                           value={tableSize ?? ""}
                           disabled={isTableInitialized}
-                          max={176}
+                          max={126}
                           onChange={(e) => {
-                            const val = parseInt(e.target.value, 10);
+                            const valStr = e.target.value.slice(0, 3);
+                            const val = parseInt(valStr, 10);
                             if (isNaN(val)) {
                               setTableSize(null);
                              
-                            } else if (val > 176) {
-                              setTableSize(176);
+                            } else if (val > 126) {
+                              setTableSize(126);
                               
                             } else{
                               setTableSize(val);
@@ -360,7 +361,7 @@ export default function Home() {
                               ...base,
                               backgroundColor: '#060c2cdd',
                               color: 'white',
-                              borderRadius: '12px',
+                              borderRadius: '6px',
                               border: '1px solid white',
                               fontSize: '20px',
                               padding: '0 8px',         
@@ -371,7 +372,7 @@ export default function Home() {
                             menu: (base) => ({
                               ...base,
                               backgroundColor: '#060c2cdd',
-                              borderRadius: '12px',
+                              borderRadius: '6px',
                               marginTop: 5,          
                               width: '100%',
                               border: '2px solid white', 
@@ -396,13 +397,13 @@ export default function Home() {
                               ...base,
                               color: '#c0c0c0ff',             
                               fontSize: '16px',
-                              paddingRight: '300px'
+                              paddingRight: '266px'
                             }),
                             container: (base) => ({
                               ...base,
                               alignSelf: 'flex-start',    
-                              width: '470px',
-                              marginLeft:'5px',
+                              width: '435px',
+                              marginLeft:'4px',
                               marginBottom: '10px',
                               marginTop: '10px', 
                               
@@ -516,8 +517,7 @@ export default function Home() {
                           flex: 1,
                           width: "100%",
                           height: "100%",
-                          overflowX: "auto",
-                          overflowY: "auto",
+                          
                         }}
                       >
                         <div
@@ -525,7 +525,7 @@ export default function Home() {
                           style={{
                             display: "grid",
                             gridAutoFlow: "column",
-                            gridTemplateRows: `repeat(11, 50px)`,
+                            gridTemplateRows: `repeat(9, 50px)`,
                             gap: "6px",
                             marginTop: "10px",
                             marginLeft: "10px",
