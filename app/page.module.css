@@ -494,8 +494,8 @@
   grid-template-columns: 1fr 2fr;
   gap: clamp(0.5vw, 1.5vw, 3vw);
   
-  width: clamp(320px, 95vw, 1485px);
-  height: clamp(400px, 75vh, 650px);
+  width: clamp(320px, 95vw, 1385px);
+  height: clamp(400px, 80vh, 750px);
   max-width: 95vw;
   max-height: 85vh;
   

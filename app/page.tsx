@@ -325,7 +325,7 @@ export default function Home() {
                         <input
                           className={styles.input}
                           type="number"
-                          placeholder="Table Size ( Max 12 )"
+                          placeholder="Table Size ( Max 126 )"
                           value={tableSize ?? ""}
                           disabled={isTableInitialized}
                           max={126}
@@ -397,12 +397,12 @@ export default function Home() {
                               ...base,
                               color: '#c0c0c0ff',             
                               fontSize: '16px',
-                              paddingRight: '266px'
+                              paddingRight: '246px'
                             }),
                             container: (base) => ({
                               ...base,
                               alignSelf: 'flex-start',    
-                              width: '435px',
+                              width: '419px',
                               marginLeft:'4px',
                               marginBottom: '10px',
                               marginTop: '10px', 
