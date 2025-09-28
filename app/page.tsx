@@ -23,6 +23,8 @@ export default function Home() {
   { value: 'quadratic', label: 'Quadratic Probing' },
   ];
 
+  const [tableSizeInput, setTableSizeInput] = useState(""); 
+
   const addMessage = (msg: string) => {
     setMessage(msg);
     if(messageTimeout.current){
@@ -44,19 +46,44 @@ export default function Home() {
   }, [mode, tableSize]);
 
   const initTable = () => {
-    if (!tableSize || tableSize <= 0) {
+
+
+    if (!tableSizeInput) {
+      addMessage(" Please enter a valid table size");
+      return;
+    }
+
+    
+    if (/^0\d+/.test(tableSizeInput)) {
+      addMessage("Table size must not start with zero (ex: 01, 001)");
+      return;
+    }
+
+    const size = parseInt(tableSizeInput, 10);
+
+    if (isNaN(size) || size <= 0) {
       addMessage("Please enter a valid table size");
       return;
     }
-    setHashTable(Array(tableSize).fill(null));
+
+    if (size > 112) {
+      addMessage("Table size cannot exceed 112");
+      return;
+    }
+
+    setTableSize(size);
+    setHashTable(Array(size).fill(null));
     setPath([]);
     setIsTableInitialized(true);
+    addMessage(`Table initialized with size ${size}`);
+    
   };
 
   const resetTable = () => {
     setHashTable([]);
     setPath([]);
     setTableSize(null);
+    setTableSizeInput("");
     setInputVal("");
     setMode(null);
     setIsTableInitialized(false);
@@ -324,23 +351,27 @@ export default function Home() {
                       <div>
                         <input
                           className={styles.input}
-                          type="number"
+                          type="text"
                           placeholder="Table Size ( Max 112 )"
-                          value={tableSize ?? ""}
+                          value={tableSizeInput}
                           disabled={isTableInitialized}
                           max={112}
-                          onChange={(e) => {
-                            const valStr = e.target.value.slice(0, 3);
-                            const val = parseInt(valStr, 10);
-                            if (isNaN(val)) {
-                              setTableSize(null);
-                             
-                            } else if (val > 112) {
-                              setTableSize(112);
-                              
-                            } else{
-                              setTableSize(val);
+                          onKeyDown={(e) => {
+    // อนุญาตเฉพาะตัวเลข, Backspace, Delete, Arrow keys, Tab
+                            if (
+                              !/[0-9]/.test(e.key) &&
+                              e.key !== "Backspace" &&
+                              e.key !== "ArrowLeft" &&
+                              e.key !== "ArrowRight" &&
+                              e.key !== "Delete" &&
+                              e.key !== "Tab"
+                            ) {
+                              e.preventDefault();
                             }
+                          }}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/\D/g, "").slice(0, 3); // เอาเฉพาะเลข, max 3 หลัก
+                            setTableSizeInput(val);
                             
                           }}
                         />
