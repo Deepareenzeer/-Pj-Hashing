@@ -325,18 +325,18 @@ export default function Home() {
                         <input
                           className={styles.input}
                           type="number"
-                          placeholder="Table Size ( Max 128 )"
+                          placeholder="Table Size ( Max 112 )"
                           value={tableSize ?? ""}
                           disabled={isTableInitialized}
-                          max={128}
+                          max={112}
                           onChange={(e) => {
                             const valStr = e.target.value.slice(0, 3);
                             const val = parseInt(valStr, 10);
                             if (isNaN(val)) {
                               setTableSize(null);
                              
-                            } else if (val > 128) {
-                              setTableSize(128);
+                            } else if (val > 112) {
+                              setTableSize(112);
                               
                             } else{
                               setTableSize(val);
