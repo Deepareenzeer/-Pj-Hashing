@@ -427,6 +427,9 @@
 
   min-height: clamp(20rem, 50vh, 50rem); /* เพิ่ม min-height */
   max-height: clamp(36rem, 50vh, 35rem);
+
+  min-height: 400px;
+  max-height: 585px;
   
 }
 
@@ -494,12 +497,12 @@
   grid-template-columns: 1fr 2fr;
   gap: clamp(0.5vw, 1.5vw, 3vw);
   
-  width: clamp(320px, 95vw, 1385px);
+  width: clamp(320px, 95vw, 1410px);
   height: clamp(400px, 80vh, 750px);
   max-width: 95vw;
-  max-height: 85vh;
+  max-height: 110vh;
   
-  padding: clamp(0.3rem, 1vw, 1.5rem);
+  padding: clamp(0.2rem, 1vw, 1.5rem);
   box-sizing: border-box;
 }
 

@@ -355,19 +355,18 @@ export default function Home() {
                           value={options.find(o => o.value === mode) || null}
                           onChange={(selected) => setMode(selected?.value as Mode)}
                           isDisabled={!isTableInitialized}
+                          isSearchable={false}
                           placeholder="Select Mode"
                           styles={{
                             control: (base) => ({
                               ...base,
                               backgroundColor: '#060c2cdd',
-                              color: 'white',
-                              borderRadius: '6px',
-                              border: '1px solid white',
-                              fontSize: '20px',
-                              padding: '0 8px',         
-                              height: '45px',
-                              display: 'flex',        
-                              alignItems: 'center',    
+                              height: 'clamp(35px, 4vw, 45px)', 
+                              borderRadius: '6px', // สูงตามขนาดหน้าจอ
+                              fontSize: 'clamp(14px, 1.2vw, 20px)', 
+                              padding: '0 8px',
+                              display: 'flex',
+                              alignItems: 'center',      
                             }),
                             menu: (base) => ({
                               ...base,
@@ -383,29 +382,29 @@ export default function Home() {
                               backgroundColor: state.isFocused ? '#1a1f4a' : '#060c2c',
                               color: 'white',
                               padding: 10,
-                              fontSize: '16px',           
+                              fontSize: 'clamp(14px, 1vw, 16px)',           
                               textAlign: 'left',          
                             }),
                             singleValue: (base) => ({
                               ...base,
                               color: 'white',
-                              fontSize: '18px',           
+                              fontSize: 'clamp(16px, 1.2vw, 18px)',           
                               textAlign: 'left',
                               
                             }),
                             placeholder: (base) => ({
                               ...base,
                               color: '#c0c0c0ff',             
-                              fontSize: '16px',
-                              paddingRight: '246px'
+                              fontSize: 'clamp(14px, 1vw, 16px)',
+                              paddingRight: '70%',
                             }),
                             container: (base) => ({
-                              ...base,
-                              alignSelf: 'flex-start',    
-                              width: '419px',
-                              marginLeft:'4px',
-                              marginBottom: '10px',
-                              marginTop: '10px', 
+                                ...base,
+                                width: '100%',      // ใช้เต็ม parent
+                                maxWidth: '419px',  // จำกัดสูงสุด
+                                marginLeft:'4px',
+                                marginBottom: '10px',
+                                marginTop: '10px',
                               
                             }),
                           }}
