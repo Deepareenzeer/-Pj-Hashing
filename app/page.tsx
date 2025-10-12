@@ -79,10 +79,10 @@ export default function Home() {
       addMessage("Table size cannot be zero");
       return;
     }
-    if (size > 126) {
-      addMessage("Table size cannot exceed 126");
-      return;
-    }
+    if (Math.abs(size) > 126) {
+      addMessage("Absolute table size cannot exceed 126");
+      return;
+    }
 
     setTableSize(size);
     setHashTable(Array(Math.abs(size)).fill(null)); // แฮชเทเบิลใช้ขนาดบวก
@@ -493,7 +493,7 @@ export default function Home() {
                               ...base,
                               color: '#c0c0c0ff',             
                               fontSize: 'clamp(14px, 1vw, 16px)',
-                              paddingRight: '78%',
+                              paddingRight: '75%',
                             }),
                             container: (base) => ({
                                 ...base,
