@@ -319,7 +319,7 @@
 }
 
 .path {
-  outline: 3px solid red;
+  outline: 3px solid rgb(197, 161, 161);
 }
 
 .simulatorBox {
@@ -342,7 +342,7 @@
 }
 
 .path {
-  outline: 3px solid red;
+  outline: 3px solid rgb(163, 52, 52);
 }
 
 .simulatorBox {
@@ -398,7 +398,7 @@
 .arrow {
   position: absolute;
   font-size: 16px;
-  color: red;
+  color: rgb(167, 53, 53);
   font-weight: bold;
   margin-top: 2px;
 }
@@ -729,3 +729,4 @@
 .toggleSwitch.on .toggleCircle {
   transform: translateX(21px);
 }
+

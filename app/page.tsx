@@ -2,8 +2,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import ReactFullpage from "@fullpage/react-fullpage";
 import Image from "next/image";
+import Select from "react-select";
 import styles from "./page.module.css";
-import Select from 'react-select';
 import "./globals.css";
 
 type Mode = "linear" | "quadratic" | null;
@@ -20,72 +20,62 @@ export default function Home() {
   const [message, setMessage] = useState<string | null>(null);
   const messageTimeout = useRef<NodeJS.Timeout | null>(null);
   const [freeInputMode, setFreeInputMode] = useState(false);
+
+  
+  
+  const [tableSizeInput, setTableSizeInput] = useState("");
   const options = [
-  { value: 'linear', label: 'Linear Probing' },
-  { value: 'quadratic', label: 'Quadratic Probing' },
+    { value: "linear", label: "Linear Probing" },
+    { value: "quadratic", label: "Quadratic Probing" },
   ];
-
-  const [tableSizeInput, setTableSizeInput] = useState(""); 
-
-  const isValidKey = (val: string) => {
-    if (!freeInputMode) {
-      return /^[0-9]+$/.test(val); 
-    } else {
-      return /^-?\d+$/.test(val);
-    }
-  };
 
   const addMessage = (msg: string) => {
     setMessage(msg);
-    if(messageTimeout.current){
-      clearTimeout(messageTimeout.current);
-    }
+    if (messageTimeout.current) clearTimeout(messageTimeout.current);
     messageTimeout.current = setTimeout(() => {
       setMessage(null);
       messageTimeout.current = null;
     }, 4000);
   };
-  
-  useEffect(() => {
-    if (!mode) return; 
-    if (!tableSize || tableSize <= 0) return;
 
+  const isValidKey = (val: string) => {
+    if (!val) return false;
+
+    if (!freeInputMode) {
+      
+      return /^-?[1-9]\d*$/.test(val) || val === "0";
+    } else {
+      
+      return /^-?[1-9]\d*$/.test(val) || val === "0";
+    }
+  };
+
+  useEffect(() => {
+    if (!mode || !tableSize) return;
     setHashTable(Array(tableSize).fill(null));
     setPath([]);
     addMessage(`Mode changed to ${mode}. Hash table reset.`);
-    }, [mode, tableSize]);
+  }, [mode, tableSize]);
 
-    const initTable = () => {
-    if (!tableSizeInput) {
-      addMessage("Please enter a valid table size");
+  const initTable = () => {
+    const val = tableSizeInput.trim();
+    if (!isValidKey(val)) {
+      addMessage("Table size must be a valid number (no letters, no leading 0s)");
       return;
     }
 
-    if (/^0\d+/.test(tableSizeInput)) {
-      addMessage("Table size must not start with zero (ex: 01, 001)");
+    const size = parseInt(val, 10);
+    if (size === 0) {
+      addMessage("Table size cannot be zero");
       return;
     }
-
-    const size = parseInt(tableSizeInput, 10);
-
-    if (isNaN(size)) {
-      addMessage("Please enter a valid table size");
-      return;
-    }
-
-   
-    if (!freeInputMode && size <= 0) {
-      addMessage("Table size must be a positive number");
-      return;
-    }
-
-    if (Math.abs(size) > 126) {
+    if (size > 126) {
       addMessage("Table size cannot exceed 126");
       return;
     }
 
-    setTableSize(Math.abs(size)); 
-    setHashTable(Array(Math.abs(size)).fill(null));
+    setTableSize(size);
+    setHashTable(Array(Math.abs(size)).fill(null)); // แฮชเทเบิลใช้ขนาดบวก
     setPath([]);
     setIsTableInitialized(true);
     addMessage(`Table initialized with size ${size}`);
@@ -112,21 +102,18 @@ export default function Home() {
       addMessage("Please enter a valid table size");
       return false;
     }
-    if (hashTable.length !== tableSize) {
-      setHashTable(Array(tableSize).fill(null));
-    }
+    if (hashTable.length !== tableSize) setHashTable(Array(tableSize).fill(null));
     return true;
   };
 
   const insert = () => {
-    if (!ensureReady()) return;
-    if (!mode) {
-      addMessage("Please select a mode");
+    if (!ensureReady() || !mode || !isValidKey(inputVal)) {
+      addMessage("Invalid input or mode not selected!");
       return;
     }
 
     if (!isValidKey(inputVal)) {
-      addMessage("Invalid input! Insert supports only numeric values.");
+      addMessage("Input must be a valid positive or negative number (no 01, A1 etc.)");
       return;
     }
 
@@ -153,14 +140,13 @@ export default function Home() {
   };
 
   const search = () => {
-    if (!ensureReady()) return;
-    if (!mode) {
-      addMessage("Please select a mode");
+    if (!ensureReady() || !mode || !isValidKey(inputVal)) {
+      addMessage("Invalid input or mode not selected!");
       return;
     }
 
     if (!isValidKey(inputVal)) {
-      addMessage("Invalid input! Search supports only numeric values.");
+      addMessage("Input must be a valid positive or negative number (no 01, A1 etc.)");
       return;
     }
 
@@ -189,14 +175,12 @@ export default function Home() {
   };
 
   const remove = () => {
-    if (!ensureReady()) return;
-    if (!mode) {
-      addMessage("Please select a mode");
+    if (!ensureReady() || !mode || !isValidKey(inputVal)) {
+      addMessage("Invalid input or mode not selected!");
       return;
     }
-
     if (!isValidKey(inputVal)) {
-      addMessage("Invalid input! Delete supports only numeric values.");
+      addMessage("Input must be a valid positive or negative number (no 01, A1 etc.)");
       return;
     }
 
@@ -241,6 +225,18 @@ export default function Home() {
     el.addEventListener("wheel", handleWheel, { passive: false });
     return () => el.removeEventListener("wheel", handleWheel);
   }, [hovering]);
+
+ 
+  useEffect(() => {
+   
+    if (path.length > 0) {
+      const timer = setTimeout(() => {
+        setPath([]); // Clear the path after 2 seconds.
+      }, 2000); 
+
+      return () => clearTimeout(timer);
+    }
+  }, [path]); 
 
   return (
     <ReactFullpage
@@ -396,32 +392,26 @@ export default function Home() {
                         <input
                           className={styles.input}
                           type="text"
-                          placeholder="Table Size ( Max 126 )"
+                          placeholder="Table Size (Max 126)"
                           value={tableSizeInput}
                           disabled={isTableInitialized}
-                          max={112}
                           onKeyDown={(e) => {
+                            const allowedKeys = ["Backspace","ArrowLeft","ArrowRight","Delete","Tab"];
                             if (!freeInputMode) {
-                              if (
-                                !/[0-9]/.test(e.key) &&
-                                e.key !== "Backspace" &&
-                                e.key !== "ArrowLeft" &&
-                                e.key !== "ArrowRight" &&
-                                e.key !== "Delete" &&
-                                e.key !== "Tab"
-                              ) {
-                                e.preventDefault();
-                              } 
+                              // - เฉพาะตัวแรก
+                              if (e.key === "-" && tableSizeInput.length !== 0) e.preventDefault();
+                              // อนุญาตแค่ตัวเลข, -, control keys
+                              if (!/[0-9]/.test(e.key) && e.key !== "-" && !allowedKeys.includes(e.key)) e.preventDefault();
                             }
                           }}
                           onChange={(e) => {
                             let val = e.target.value;
                             if (!freeInputMode) {
-    
-                              val = val.replace(/(?!^-)[^0-9]/g, "").slice(0, 3); // 5 รวม - แล้ว
+                              val = val.replace(/[^0-9-]/g, ""); // ลบตัวอักษร
+                              val = val.replace(/^(-?)0+(\d)/, "$1$2"); // ลบ leading zeros
+                              val = val.slice(0, 3); // max 3 หลัก สำหรับ table size
                             }
                             setTableSizeInput(val);
-                            
                           }}
                         />
                         <button onClick={initTable} className={styles.button}>Init</button>
@@ -495,20 +485,24 @@ export default function Home() {
                         <input
                           className={styles.input}
                           type="text"
-                          inputMode="numeric"
-                          placeholder="Enter number ( Max 9999 )"
+                          placeholder="Enter number (Max 99999)"
                           value={inputVal}
                           onKeyDown={(e) => {
-                            const allowedKeys = ["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"];
+                            const allowedKeys = ["Backspace","ArrowLeft","ArrowRight","Delete","Tab"];
                             if (!freeInputMode) {
-                              if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) e.preventDefault();
+                              if (e.key === "-" && inputVal.length !== 0) e.preventDefault();
+                              if (!/[0-9]/.test(e.key) && e.key !== "-" && !allowedKeys.includes(e.key)) e.preventDefault();
                             }
                           }}
                           onChange={(e) => {
                             let val = e.target.value;
+
                             if (!freeInputMode) {
-                              val = val.replace(/\D/g, "").slice(0, 4);
+                              val = val.replace(/[^0-9-]/g, "");
+                              val = val.replace(/^(-?)0+(\d)/, "$1$2"); // ลบเลขนำหน้า 0
+                              val = val.slice(0,5); // max 4 หลัก + -
                             }
+
                             setInputVal(val);
                           }}
                           disabled={!isTableInitialized}
