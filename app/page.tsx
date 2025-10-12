@@ -103,18 +103,22 @@ export default function Home() {
   };
 
   const hashFunction = (key: number) => {
-    const m = tableSize as number;
-    return ((key % m) + m) % m;
-  };
+    const m = Math.abs(tableSize as number); 
+    return ((key % m) + m) % m;
+  };
 
   const ensureReady = () => {
-    if (!tableSize || tableSize <= 0) {
-      addMessage("Please enter a valid table size");
-      return false;
+    
+    if (!tableSize) { 
+      addMessage("Please initialize the table with a valid size");
+      return false;
+    }
+    
+    if (hashTable.length !== Math.abs(tableSize)) {
+      setHashTable(Array(Math.abs(tableSize)).fill(null));
     }
-    if (hashTable.length !== tableSize) setHashTable(Array(tableSize).fill(null));
-    return true;
-  };
+    return true;
+  };
 
   const insert = () => {
     if (!ensureReady() || !mode || !isValidKey(inputVal)) {
@@ -130,7 +134,7 @@ export default function Home() {
     
 
     const key = parseInt(inputVal, 10);
-    const m = tableSize as number;
+    const m = Math.abs(tableSize as number); 
     const start = hashFunction(key);
     let i = 0;
     const newPath: number[] = [];
@@ -168,7 +172,7 @@ export default function Home() {
     }
 
     const key = parseInt(inputVal, 10);
-    const m = tableSize as number;
+    const m = Math.abs(tableSize as number); 
     const start = hashFunction(key);
     let i = 0;
     const newPath: number[] = [];
@@ -207,7 +211,7 @@ export default function Home() {
     }
 
     const key = parseInt(inputVal, 10);
-    const m = tableSize as number;
+    const m = Math.abs(tableSize as number); 
     const start = hashFunction(key);
     let i = 0;
     const newPath: number[] = [];
@@ -428,7 +432,7 @@ export default function Home() {
                               // - เฉพาะตัวแรก
                               if (e.key === "-" && tableSizeInput.length !== 0) e.preventDefault();
                               // อนุญาตแค่ตัวเลข, -, control keys
-                              if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) e.preventDefault();
+                              if (!/[0-9]/.test(e.key) && e.key !== "-" && !allowedKeys.includes(e.key)) e.preventDefault();
                             }
                           }}
                           onChange={(e) => {
@@ -545,7 +549,7 @@ export default function Home() {
 
                       {(() => {
                         const key = parseInt(inputVal, 10);
-                        const m = tableSize ?? null;
+                        const m = tableSize ? Math.abs(tableSize) : null;
 
                         if (!m || isNaN(key) || !mode) {
                           return (
