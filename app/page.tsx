@@ -4,7 +4,6 @@ import ReactFullpage from "@fullpage/react-fullpage";
 import Image from "next/image";
 import styles from "./page.module.css";
 import Select from 'react-select';
-import localFont from "next/font/local";
 import "./globals.css";
 
 type Mode = "linear" | "quadratic" | null;
@@ -20,12 +19,21 @@ export default function Home() {
   const [path, setPath] = useState<number[]>([]);
   const [message, setMessage] = useState<string | null>(null);
   const messageTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [freeInputMode, setFreeInputMode] = useState(false);
   const options = [
   { value: 'linear', label: 'Linear Probing' },
   { value: 'quadratic', label: 'Quadratic Probing' },
   ];
 
   const [tableSizeInput, setTableSizeInput] = useState(""); 
+
+  const isValidKey = (val: string) => {
+    if (!freeInputMode) {
+      return /^[0-9]+$/.test(val); 
+    } else {
+      return /^-?\d+$/.test(val);
+    }
+  };
 
   const addMessage = (msg: string) => {
     setMessage(msg);
@@ -38,25 +46,21 @@ export default function Home() {
     }, 4000);
   };
   
-  
   useEffect(() => {
-  if (!mode) return; 
-  if (!tableSize || tableSize <= 0) return;
+    if (!mode) return; 
+    if (!tableSize || tableSize <= 0) return;
 
-  setHashTable(Array(tableSize).fill(null));
-  setPath([]);
-  addMessage(`Mode changed to ${mode}. Hash table reset.`);
-  }, [mode, tableSize]);
+    setHashTable(Array(tableSize).fill(null));
+    setPath([]);
+    addMessage(`Mode changed to ${mode}. Hash table reset.`);
+    }, [mode, tableSize]);
 
-  const initTable = () => {
-
-
+    const initTable = () => {
     if (!tableSizeInput) {
-      addMessage(" Please enter a valid table size");
+      addMessage("Please enter a valid table size");
       return;
     }
 
-    
     if (/^0\d+/.test(tableSizeInput)) {
       addMessage("Table size must not start with zero (ex: 01, 001)");
       return;
@@ -64,22 +68,27 @@ export default function Home() {
 
     const size = parseInt(tableSizeInput, 10);
 
-    if (isNaN(size) || size <= 0) {
+    if (isNaN(size)) {
       addMessage("Please enter a valid table size");
       return;
     }
 
-    if (size > 126) {
+   
+    if (!freeInputMode && size <= 0) {
+      addMessage("Table size must be a positive number");
+      return;
+    }
+
+    if (Math.abs(size) > 126) {
       addMessage("Table size cannot exceed 126");
       return;
     }
 
-    setTableSize(size);
-    setHashTable(Array(size).fill(null));
+    setTableSize(Math.abs(size)); 
+    setHashTable(Array(Math.abs(size)).fill(null));
     setPath([]);
     setIsTableInitialized(true);
     addMessage(`Table initialized with size ${size}`);
-    
   };
 
   const resetTable = () => {
@@ -115,15 +124,18 @@ export default function Home() {
       addMessage("Please select a mode");
       return;
     }
-    const key = parseInt(inputVal, 10);
-    if (isNaN(key)) {
-      addMessage("Please enter a valid number");
+
+    if (!isValidKey(inputVal)) {
+      addMessage("Invalid input! Insert supports only numeric values.");
       return;
     }
+
+    const key = parseInt(inputVal, 10);
     const m = tableSize as number;
     const start = hashFunction(key);
     let i = 0;
     const newPath: number[] = [];
+
     while (i < m) {
       const probe = mode === "linear" ? (start + i) % m : (start + i * i) % m;
       newPath.push(probe);
@@ -143,22 +155,24 @@ export default function Home() {
   const search = () => {
     if (!ensureReady()) return;
     if (!mode) {
-      addMessage("Please select a probing method");
+      addMessage("Please select a mode");
       return;
     }
+
+    if (!isValidKey(inputVal)) {
+      addMessage("Invalid input! Search supports only numeric values.");
+      return;
+    }
+
     const key = parseInt(inputVal, 10);
-    if (isNaN(key)) {
-      addMessage("Please enter a valid number");
-      return;
-    }
     const m = tableSize as number;
     const start = hashFunction(key);
     let i = 0;
     const newPath: number[] = [];
+
     while (i < m) {
       const probe = mode === "linear" ? (start + i) % m : (start + i * i) % m;
       newPath.push(probe);
-
       if (hashTable[probe] === key) {
         setPath(newPath);
         addMessage(`Key ${key} found at index ${probe}`);
@@ -177,14 +191,16 @@ export default function Home() {
   const remove = () => {
     if (!ensureReady()) return;
     if (!mode) {
-      addMessage("Please select a probing method");
+      addMessage("Please select a mode");
       return;
     }
+
+    if (!isValidKey(inputVal)) {
+      addMessage("Invalid input! Delete supports only numeric values.");
+      return;
+    }
+
     const key = parseInt(inputVal, 10);
-    if (isNaN(key)) {
-      addMessage("Please enter a valid number");
-      return;
-    }
     const m = tableSize as number;
     const start = hashFunction(key);
     let i = 0;
@@ -351,6 +367,31 @@ export default function Home() {
                   <div className={styles.leftPanel}>
                     <section className={styles.frame}>
                       <h2 className={styles.frameTitle}>⚙️ Input Controls</h2>
+                      <div className={styles.toggleWrapper}>
+                        
+                        <div
+                          className={`${styles.toggleSwitch} ${freeInputMode ? styles.on : ""}`}
+                          onClick={() => {
+                            setFreeInputMode(!freeInputMode);
+                            addMessage(
+                              !freeInputMode
+                                ? "Free Input Mode enabled — You can type any characters."
+                                : "Free Input Mode disabled — Only numbers allowed."
+                            );
+                            setHashTable([]);
+                            setPath([]);
+                            setTableSize(null);
+                            setTableSizeInput("");
+                            setInputVal("");
+                            setMode(null);
+                            setIsTableInitialized(false);
+                          
+                            
+                          }}
+                        >
+                          <div className={styles.toggleCircle}></div>
+                        </div>
+                      </div>
                       <div>
                         <input
                           className={styles.input}
@@ -360,20 +401,25 @@ export default function Home() {
                           disabled={isTableInitialized}
                           max={112}
                           onKeyDown={(e) => {
-    // อนุญาตเฉพาะตัวเลข, Backspace, Delete, Arrow keys, Tab
-                            if (
-                              !/[0-9]/.test(e.key) &&
-                              e.key !== "Backspace" &&
-                              e.key !== "ArrowLeft" &&
-                              e.key !== "ArrowRight" &&
-                              e.key !== "Delete" &&
-                              e.key !== "Tab"
-                            ) {
-                              e.preventDefault();
+                            if (!freeInputMode) {
+                              if (
+                                !/[0-9]/.test(e.key) &&
+                                e.key !== "Backspace" &&
+                                e.key !== "ArrowLeft" &&
+                                e.key !== "ArrowRight" &&
+                                e.key !== "Delete" &&
+                                e.key !== "Tab"
+                              ) {
+                                e.preventDefault();
+                              } 
                             }
                           }}
                           onChange={(e) => {
-                            const val = e.target.value.replace(/\D/g, "").slice(0, 3); // เอาเฉพาะเลข, max 3 หลัก
+                            let val = e.target.value;
+                            if (!freeInputMode) {
+    
+                              val = val.replace(/(?!^-)[^0-9]/g, "").slice(0, 3); // 5 รวม - แล้ว
+                            }
                             setTableSizeInput(val);
                             
                           }}
@@ -396,7 +442,7 @@ export default function Home() {
                               ...base,
                               backgroundColor: '#060c2cdd',
                               height: 'clamp(35px, 4vw, 45px)', 
-                              borderRadius: '6px', // สูงตามขนาดหน้าจอ
+                              borderRadius: '6px', 
                               fontSize: 'clamp(14px, 1.2vw, 20px)', 
                               padding: '0 8px',
                               display: 'flex',
@@ -434,8 +480,8 @@ export default function Home() {
                             }),
                             container: (base) => ({
                                 ...base,
-                                width: '100%',      // ใช้เต็ม parent
-                                maxWidth: '533px',  // จำกัดสูงสุด
+                                width: '100%',      
+                                maxWidth: '533px',  
                                 marginLeft:'4px',
                                 marginBottom: '10px',
                                 marginTop: '10px',
@@ -452,10 +498,17 @@ export default function Home() {
                           inputMode="numeric"
                           placeholder="Enter number ( Max 9999 )"
                           value={inputVal}
+                          onKeyDown={(e) => {
+                            const allowedKeys = ["Backspace", "ArrowLeft", "ArrowRight", "Delete", "Tab"];
+                            if (!freeInputMode) {
+                              if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) e.preventDefault();
+                            }
+                          }}
                           onChange={(e) => {
-                            
-                            const val = e.target.value.replace(/\D/g, "").slice(0,4);
-                            
+                            let val = e.target.value;
+                            if (!freeInputMode) {
+                              val = val.replace(/\D/g, "").slice(0, 4);
+                            }
                             setInputVal(val);
                           }}
                           disabled={!isTableInitialized}
@@ -465,9 +518,7 @@ export default function Home() {
                         <button onClick={remove} className={styles.button} disabled={!isTableInitialized}>Delete</button>
                       </div>
                     </section>
-
-                    {/* 🔹 Formula Section */}
-                    
+                 
                     <section className={styles.frame4}>
                       <h2 className={styles.frameTitle}>📐 Calculation Formula</h2>
 
@@ -491,7 +542,6 @@ export default function Home() {
 
                         return (
                           <div>
-                            {/* base hash */}
                             <p>
                               Hash Function:&nbsp;
                               <code>
@@ -499,7 +549,6 @@ export default function Home() {
                               </code>
                             </p>
 
-                            {/* probing formula */}
                             {mode === "linear" && (
                               <p>
                                 Linear Probing:&nbsp;
@@ -522,7 +571,6 @@ export default function Home() {
                       })()}
                     </section>
 
-                    {/* 🔹 Warning / Messages Section */}
                     <section className={styles.frame3}>
                       <h2 className={styles.frameTitle}>⚠️ Messages Error</h2>
                       {message && (
@@ -539,12 +587,10 @@ export default function Home() {
                     </section>
                   </div>
 
-                  {/* 🔹 Table Section */}
                   <div className={styles.rightPanel}>
                     <section className={styles.frame2}>
                       <h2 className={styles.frameTitle2}>📊 Hash Table</h2>
 
-                      {/* 🔹 Wrapper: fix กรอบไม่ให้ยืด แต่ scroll ได้ */}
                       <div
                         style={{
                           flex: 1,
@@ -560,8 +606,8 @@ export default function Home() {
                             gridAutoFlow: "column",
                             gridTemplateRows: `repeat(9, 50px)`,
                             gap: "6px",
-                            maxWidth: "100%",   // 🔹 fix width ไม่ให้ยืดเกินหน้าจอ
-                            overflowX: "auto",  // 🔹 scroll แนวนอนถ้า table ใหญ่
+                            maxWidth: "100%",   
+                            overflowX: "auto", 
                             padding: "5px",
                           }}
                         >
@@ -601,7 +647,6 @@ export default function Home() {
               </main>
             </div>
           </div>
-
         </ReactFullpage.Wrapper>
       )}
     />

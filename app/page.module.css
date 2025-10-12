@@ -9,21 +9,21 @@
   width: 100vw;
   height: 100vh;
   margin: 0;
-  padding: 0;            /* ❌ แก้ตรงนี้ ลบ padding 80px ออก */
-  display: flex;         /* ใช้ flex แทน grid */
-  justify-content: flex-start; /* ถ้าอยากให้อยู่ซ้าย */
-  align-items: flex-start;     /* ถ้าอยากให้อยู่บน */
-  overflow: hidden;      /* กัน scroll */
+  padding: 0;            
+  display: flex;       
+  justify-content: flex-start; 
+  align-items: flex-start;     
+  overflow: hidden;      
   font-family: MyFont;
 }
 
 @font-face {
   font-family: 'MyFont';
-  src: url('/font/Nomark.otf') format('otf2'), /* ใช้ไฟล์ฟอนต์จริง */
-       url('/font/Nomark.otf') format('woff');   /* สำรอง */
+  src: url('/font/Nomark.otf') format('otf2'), 
+       url('/font/Nomark.otf') format('woff');   
   font-weight: normal;
   font-style: normal;
-  font-display: swap; /* ให้เบราว์เซอร์ใช้ fallback ชั่วคราวก่อนโหลดฟอนต์ */
+  font-display: swap; 
 }
 
 @media (prefers-color-scheme: dark) {
@@ -52,7 +52,7 @@
   width: 100%;
   height: auto;
   max-width: 100%;
-  aspect-ratio: 16 / 9;  /* ยังรักษาอัตราส่วน */
+  aspect-ratio: 16 / 9;  
   padding: clamp(1rem, 2vw, 3rem);
   box-sizing: border-box;
 }
@@ -62,7 +62,7 @@
   max-width: 1920px;
   aspect-ratio: 16 / 9;
   display: flex;
-  justify-content: space-between; /* Text ซ้าย รูปขวา */
+  justify-content: space-between; 
   align-items: center;
   padding: clamp(1rem, 2vw, 3rem);
   box-sizing: border-box;
@@ -71,14 +71,14 @@
 .title {
   font-size: clamp(3rem, 15vw, 22rem);
   font-weight: 500;
-  color: #436fff; /* สีม่วงน้ำเงินตามภาพ */
-  line-height: 1; /* ปรับเพื่อลดช่องว่างระหว่างบรรทัด */
+  color: #436fff; 
+  line-height: 1; 
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   margin: 0;
 }
 
 .title2 {
-  font-size: clamp(32px, 6vw, 400px); /* เพิ่ม max เป็น 400px และ scale เร็วขึ้น */
+  font-size: clamp(32px, 6vw, 400px); 
   font-weight: 500;
   color: #436fff;
   line-height: 1;
@@ -99,7 +99,7 @@
 .subtitle {
   font-size: 3rem;
   font-weight: 400;
-  color: #797676; /* สีเทาอ่อน */
+  color: #797676; 
   line-height: 1.5;
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   margin: 0;
@@ -108,7 +108,7 @@
 .subtitle2 {
   font-size: clamp(16px, 2.5vw, 30px);
   font-weight: 400;
-  color: #797676; /* สีเทาอ่อน */
+  color: #797676; 
   line-height: 1.5;
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   margin: 0;
@@ -125,13 +125,13 @@
 }
 
 .colorY {
-  color: #436fff; /* สีเหลือง */
+  color: #436fff; 
 }
 .colorOJ {
-  color: #ff0000; /* สีส้ม */
+  color: #ff0000; 
 }
 .colorI {
-  color: #436fff; /* สีแดงอมส้ม */
+  color: #436fff; 
 }
 
 .ctas {
@@ -143,7 +143,7 @@
 }
 .img {
   display: flex;
-  justify-content: flex-start; /* เปลี่ยนเป็น center / end ได้ตามใจ */
+  justify-content: flex-start; 
   align-items: center;
   gap: clamp(1rem, 2vw, 2.5rem);
   margin-top: clamp(1rem, 2vw, 3rem);
@@ -151,7 +151,7 @@
 }
 .img1 {
   display: flex;
-  justify-content: flex-start; /* เปลี่ยนเป็น center / end ได้ตามใจ */
+  justify-content: flex-start; 
   align-items: center;
   gap: clamp(1rem, 2vw, 2.5rem);
   margin-top: clamp(1rem, 2vw, 3rem);
@@ -411,7 +411,7 @@
   
   display: flex;
   flex-direction: column;
-  flex: 0 0 auto; /* ไม่ขยายตัว */
+  flex: 0 0 auto; 
   
   min-height: 0;
   overflow: hidden;
@@ -428,7 +428,7 @@
   padding: clamp(0.3rem, 0.8vw, 1rem);
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   
-  flex: 1; /* ใช้พื้นที่ที่เหลือ */
+  flex: 1; 
   overflow: hidden;
   
   display: flex;
@@ -642,7 +642,6 @@
   background: linear-gradient(135deg, #4a9eff, #4d3ed4);
   transform: translateY(-1px);
   box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-  /* ไม่เปลี่ยนขนาด เปลี่ยนแค่สี เงา และตำแหน่ง */
 }
 
 .button:active {
@@ -666,21 +665,67 @@
 
 
 .cell {
-  width: clamp(25px, 5vw, 45px); /* ลดขนาดเซลล์ */
+  width: clamp(25px, 5vw, 45px); 
   height: clamp(25px, 5vw, 45px);
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 600;
-  font-size: clamp(10px, 1.5vw, 14px); /* ลดขนาดฟอนต์ */
+  font-size: clamp(10px, 1.5vw, 14px); 
   border: 1px solid #222;
   box-sizing: border-box;
   position: relative; 
 }
 
 
+.toggleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  transform: translateY(-48px);
+  left: 468px;
+}
 
-@font-face {
-  font-family: 'MyFont';
-  src: url(data:font/woff2;base64,AAEAAAALAIAAA...) format('woff2');
+@media (max-width: 1920px) {
+  .toggleWrapper {
+    
+    transform: translateY(-48px);
+    left: 480px;
+  }
+}
+
+
+
+/* 🔹 iPhone-style Toggle (เหมือนเดิม แต่ปรับขนาดให้เล็กลงนิดนึง) */
+.toggleSwitch {
+  width: 50px;
+  height: 24px;
+  background-color: #444;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.toggleSwitch .toggleCircle {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* 🔹 Active State */
+.toggleSwitch.on {
+  background-color: #4ade80;
+  box-shadow: 0 0 10px #4ade80;
+}
+
+.toggleSwitch.on .toggleCircle {
+  transform: translateX(21px);
 }
