@@ -432,13 +432,13 @@ export default function Home() {
                               // - เฉพาะตัวแรก
                               if (e.key === "-" && tableSizeInput.length !== 0) e.preventDefault();
                               // อนุญาตแค่ตัวเลข, -, control keys
-                              if (!/[0-9]/.test(e.key) && e.key !== "-" && !allowedKeys.includes(e.key)) e.preventDefault();
+                              if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) e.preventDefault();
                             }
                           }}
                           onChange={(e) => {
                             let val = e.target.value;
                             if (!freeInputMode) {
-                              val = val.replace(/[^0-9-]/g, ""); // ลบตัวอักษร
+                              val = val.replace(/[^0-9]/g, "");  // ลบตัวอักษร
                               val = val.replace(/^(-?)0+(\d)/, "$1$2"); // ลบ leading zeros
                               val = val.slice(0, 3); // max 3 หลัก สำหรับ table size
                             }
@@ -522,14 +522,14 @@ export default function Home() {
                             const allowedKeys = ["Backspace","ArrowLeft","ArrowRight","Delete","Tab"];
                             if (!freeInputMode) {
                               if (e.key === "-" && inputVal.length !== 0) e.preventDefault();
-                              if (!/[0-9]/.test(e.key) && e.key !== "-" && !allowedKeys.includes(e.key)) e.preventDefault();
+                              if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) e.preventDefault();
                             }
                           }}
                           onChange={(e) => {
                             let val = e.target.value;
 
                             if (!freeInputMode) {
-                              val = val.replace(/[^0-9-]/g, "");
+                              val = val.replace(/[^0-9]/g, ""); 
                               val = val.replace(/^(-?)0+(\d)/, "$1$2"); // ลบเลขนำหน้า 0
                               val = val.slice(0,5); // max 4 หลัก + -
                             }
