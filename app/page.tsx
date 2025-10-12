@@ -52,13 +52,23 @@ export default function Home() {
 
   useEffect(() => {
     if (!mode || !tableSize) return;
-    setHashTable(Array(tableSize).fill(null));
+    setHashTable(Array(Math.abs(tableSize)).fill(null)); 
     setPath([]);
     addMessage(`Mode changed to ${mode}. Hash table reset.`);
   }, [mode, tableSize]);
 
   const initTable = () => {
     const val = tableSizeInput.trim();
+
+    if (freeInputMode) {
+      const hasHyphen = val.startsWith('-');
+      
+      if ((hasHyphen && val.length > 4) || (!hasHyphen && val.length > 3)) {
+        addMessage("Table size cannot exceed 3 digits (or 4 with a sign).");
+        return;
+      }
+    }
+
     if (!isValidKey(val)) {
       addMessage("Table size must be a valid number (no letters, no leading 0s)");
       return;
@@ -117,11 +127,18 @@ export default function Home() {
       return;
     }
 
+    
+
     const key = parseInt(inputVal, 10);
     const m = tableSize as number;
     const start = hashFunction(key);
     let i = 0;
     const newPath: number[] = [];
+
+    if (Math.abs(key) > 99999) {
+      addMessage("Input number cannot exceed 5 digits (-99999 to 99999).");
+      return;
+    }
 
     while (i < m) {
       const probe = mode === "linear" ? (start + i) % m : (start + i * i) % m;
@@ -156,6 +173,11 @@ export default function Home() {
     let i = 0;
     const newPath: number[] = [];
 
+    if (Math.abs(key) > 99999) {
+      addMessage("Input number cannot exceed 5 digits (-99999 to 99999).");
+      return;
+    }
+
     while (i < m) {
       const probe = mode === "linear" ? (start + i) % m : (start + i * i) % m;
       newPath.push(probe);
@@ -189,6 +211,11 @@ export default function Home() {
     const start = hashFunction(key);
     let i = 0;
     const newPath: number[] = [];
+
+    if (Math.abs(key) > 99999) {
+      addMessage("Input number cannot exceed 5 digits (-99999 to 99999).");
+      return;
+    }
 
     while (i < m) {
       const probe = mode === "linear" ? (start + i) % m : (start + i * i) % m;
@@ -401,7 +428,7 @@ export default function Home() {
                               // - เฉพาะตัวแรก
                               if (e.key === "-" && tableSizeInput.length !== 0) e.preventDefault();
                               // อนุญาตแค่ตัวเลข, -, control keys
-                              if (!/[0-9]/.test(e.key) && e.key !== "-" && !allowedKeys.includes(e.key)) e.preventDefault();
+                              if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) e.preventDefault();
                             }
                           }}
                           onChange={(e) => {
